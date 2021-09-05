@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Artbook">
-        <activity android:name=".ConfirmActivity"></activity>
+        <activity
+            android:name=".Profile"
+            android:exported="true" />
+        <activity android:name=".ConfirmActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,8 +22,7 @@
         </activity>
         <activity
             android:name=".SignUpActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" />
