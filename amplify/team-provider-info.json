@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-artbook-dev-121948-authRole",
+      "UnauthRoleArn": "arn:aws:iam::758606166530:role/amplify-artbook-dev-121948-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::758606166530:role/amplify-artbook-dev-121948-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-artbook-dev-121948-deployment",
+      "UnauthRoleName": "amplify-artbook-dev-121948-unauthRole",
+      "StackName": "amplify-artbook-dev-121948",
+      "StackId": "arn:aws:cloudformation:us-east-1:758606166530:stack/amplify-artbook-dev-121948/6d9bdff0-0e2a-11ec-97c1-0e400500bd61",
+      "AmplifyAppId": "d1a4uv3xfcm67g"
+    },
+    "categories": {
+      "auth": {
+        "artbook03d427b7": {}
+      }
+    }
+  }
+}
