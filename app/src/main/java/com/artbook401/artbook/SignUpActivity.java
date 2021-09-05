@@ -87,26 +87,26 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-//        findViewById(R.id.btnSignup).setOnClickListener(view -> {
-//            AuthSignUpOptions options = AuthSignUpOptions.builder()
-//                    .userAttribute(AuthUserAttributeKey.email(), emailSignup.getText().toString())
-//                    .build();
-//            Amplify.Auth.signUp(userNameSignup.getText().toString(), passwordSignup.getText().toString(), options,
-//                    result -> {
-//                        Log.i("AuthQuickStart", "Result: " + result.toString());
-//
-//                        Intent signUpToConfirm = new Intent(getApplicationContext(), ConfirmSignUpActivity.class);
-//                        signUpToConfirm.putExtra("userName", userNameSignup.getText().toString());
-//                        signUpToConfirm.putExtra("password", passwordSignup.getText().toString());
-//                        startActivity(signUpToConfirm);
-//                    },
-//                    error -> Log.e("AuthQuickStart", "Sign up failed", error)
-//            );
-//        });
+        findViewById(R.id.btnSignup).setOnClickListener(view -> {
+            AuthSignUpOptions options = AuthSignUpOptions.builder()
+                    .userAttribute(AuthUserAttributeKey.email(), emailSignup.getText().toString())
+                    .build();
+            Amplify.Auth.signUp(userNameSignup.getText().toString(), passwordSignup.getText().toString(), options,
+                    result -> {
+                        Log.i("AuthQuickStart", "Result: " + result.toString());
 
-//        findViewById(R.id.btnSignInSignup).setOnClickListener(view -> {
-//            Intent signUpToSignIn = new Intent(getApplicationContext(), SignInActivity.class);
-//            startActivity(signUpToSignIn);
-//        });
+                        Intent signUpToConfirm = new Intent(getApplicationContext(), ConfirmActivity.class);
+                        signUpToConfirm.putExtra("userName", userNameSignup.getText().toString());
+                        signUpToConfirm.putExtra("password", passwordSignup.getText().toString());
+                        startActivity(signUpToConfirm);
+                    },
+                    error -> Log.e("AuthQuickStart", "Sign up failed", error)
+            );
+        });
+
+        findViewById(R.id.btnSignInSignup).setOnClickListener(view -> {
+            Intent signUpToSignIn = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(signUpToSignIn);
+        });
     }
 }

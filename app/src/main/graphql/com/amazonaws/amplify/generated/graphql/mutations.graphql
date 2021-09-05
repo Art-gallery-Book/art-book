@@ -1,13 +1,153 @@
 # this is an auto generated file. This will be overwritten
-mutation CreateTask(
-  $input: CreateTaskInput!
-  $condition: ModelTaskConditionInput
+mutation CreatePost(
+  $input: CreatePostInput!
+  $condition: ModelPostConditionInput
 ) {
-  createTask(input: $input, condition: $condition) {
+  createPost(input: $input, condition: $condition) {
     id
-    title
+    body
+    image
+    userID
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdatePost(
+  $input: UpdatePostInput!
+  $condition: ModelPostConditionInput
+) {
+  updatePost(input: $input, condition: $condition) {
+    id
+    body
+    image
+    userID
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation DeletePost(
+  $input: DeletePostInput!
+  $condition: ModelPostConditionInput
+) {
+  deletePost(input: $input, condition: $condition) {
+    id
+    body
+    image
+    userID
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  createUser(input: $input, condition: $condition) {
+    id
+    name
+    profileImage
+    posts {
+      items {
+        id
+        body
+        image
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  updateUser(input: $input, condition: $condition) {
+    id
+    name
+    profileImage
+    posts {
+      items {
+        id
+        body
+        image
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
+) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    name
+    profileImage
+    posts {
+      items {
+        id
+        body
+        image
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateEvent(
+  $input: CreateEventInput!
+  $condition: ModelEventConditionInput
+) {
+  createEvent(input: $input, condition: $condition) {
+    id
+    name
     description
-    status
+    date
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -15,15 +155,17 @@ mutation CreateTask(
     updatedAt
   }
 }
-mutation UpdateTask(
-  $input: UpdateTaskInput!
-  $condition: ModelTaskConditionInput
+mutation UpdateEvent(
+  $input: UpdateEventInput!
+  $condition: ModelEventConditionInput
 ) {
-  updateTask(input: $input, condition: $condition) {
+  updateEvent(input: $input, condition: $condition) {
     id
-    title
+    name
     description
-    status
+    date
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -31,57 +173,17 @@ mutation UpdateTask(
     updatedAt
   }
 }
-mutation DeleteTask(
-  $input: DeleteTaskInput!
-  $condition: ModelTaskConditionInput
+mutation DeleteEvent(
+  $input: DeleteEventInput!
+  $condition: ModelEventConditionInput
 ) {
-  deleteTask(input: $input, condition: $condition) {
+  deleteEvent(input: $input, condition: $condition) {
     id
-    title
+    name
     description
-    status
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-mutation CreateNote(
-  $input: CreateNoteInput!
-  $condition: ModelNoteConditionInput
-) {
-  createNote(input: $input, condition: $condition) {
-    id
-    content
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-mutation UpdateNote(
-  $input: UpdateNoteInput!
-  $condition: ModelNoteConditionInput
-) {
-  updateNote(input: $input, condition: $condition) {
-    id
-    content
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-mutation DeleteNote(
-  $input: DeleteNoteInput!
-  $condition: ModelNoteConditionInput
-) {
-  deleteNote(input: $input, condition: $condition) {
-    id
-    content
+    date
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
