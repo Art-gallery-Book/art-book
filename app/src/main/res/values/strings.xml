@@ -10,4 +10,9 @@
     <string name="enter_your_verification_code">Enter your verification code</string>
     <string name="verification_code">Verification code</string>
     <string name="confirm">Confirm</string>
+    <string name="event_name">Event Name</string>
+    <string name="event_description">Event Description</string>
+    <string name="pick_a_date">Pick a Date</string>
+    <string name="location_name">Location Name</string>
+    <string name="add_location">Add Location</string>
 </resources>
