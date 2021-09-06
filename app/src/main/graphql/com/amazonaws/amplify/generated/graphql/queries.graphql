@@ -1,11 +1,11 @@
 # this is an auto generated file. This will be overwritten
-query SyncTasks(
-  $filter: ModelTaskFilterInput
+query SyncPosts(
+  $filter: ModelPostFilterInput
   $limit: Int
   $nextToken: String
   $lastSync: AWSTimestamp
 ) {
-  syncTasks(
+  syncPosts(
     filter: $filter
     limit: $limit
     nextToken: $nextToken
@@ -13,9 +13,9 @@ query SyncTasks(
   ) {
     items {
       id
-      title
-      description
-      status
+      body
+      image
+      userID
       _version
       _deleted
       _lastChangedAt
@@ -26,12 +26,158 @@ query SyncTasks(
     startedAt
   }
 }
-query GetTask($id: ID!) {
-  getTask(id: $id) {
+query GetPost($id: ID!) {
+  getPost(id: $id) {
     id
-    title
+    body
+    image
+    userID
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListPosts(
+  $filter: ModelPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      body
+      image
+      userID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncUsers(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      name
+      profileImage
+      posts {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    name
+    profileImage
+    posts {
+      items {
+        id
+        body
+        image
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      profileImage
+      posts {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncEvents(
+  $filter: ModelEventFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncEvents(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      name
+      description
+      date
+      lat
+      lon
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetEvent($id: ID!) {
+  getEvent(id: $id) {
+    id
+    name
     description
-    status
+    date
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -39,72 +185,19 @@ query GetTask($id: ID!) {
     updatedAt
   }
 }
-query ListTasks(
-  $filter: ModelTaskFilterInput
+query ListEvents(
+  $filter: ModelEventFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      title
+      name
       description
-      status
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    nextToken
-    startedAt
-  }
-}
-query SyncNotes(
-  $filter: ModelNoteFilterInput
-  $limit: Int
-  $nextToken: String
-  $lastSync: AWSTimestamp
-) {
-  syncNotes(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
-    items {
-      id
-      content
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    nextToken
-    startedAt
-  }
-}
-query GetNote($id: ID!) {
-  getNote(id: $id) {
-    id
-    content
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-query ListNotes(
-  $filter: ModelNoteFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listNotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      content
+      date
+      lat
+      lon
       _version
       _deleted
       _lastChangedAt

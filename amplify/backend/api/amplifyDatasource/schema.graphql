@@ -1,10 +1,22 @@
-type Task @model {
+type Post @model @key(name: "byUser", fields: ["userID"]){
   id: ID!
-  title: String!
-  description: String
-  status: String
+  body: String
+  image: String!
+  userID: ID!
 }
-type Note @model {
+
+type User @model{
   id: ID!
-  content: String!
+  name: String!
+  profileImage:String
+  posts: [Post] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type Event @model{
+  id: ID!
+  name: String!
+  description: String!
+  date: String!
+  lat: Float!
+  lon: Float!
 }
