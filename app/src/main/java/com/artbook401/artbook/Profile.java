@@ -12,13 +12,17 @@ import android.os.Bundle;
 import android.os.FileUtils;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
+import com.amplifyframework.datastore.generated.model.Post;
+import com.amplifyframework.datastore.generated.model.User;
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,8 +31,10 @@ import java.util.Date;
 
 
 public class Profile extends AppCompatActivity {
+    private static final String TAG ="success" ;
     String userName ="";
     String userImageFileName="";
+    User currentUser;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -37,18 +43,20 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
 
-        // configuration
-            try {
-                Amplify.addPlugin(new AWSDataStorePlugin());
-                Amplify.addPlugin(new AWSApiPlugin());
-                Amplify.addPlugin(new AWSCognitoAuthPlugin());
-                Amplify.addPlugin(new AWSS3StoragePlugin());
-                Amplify.configure(getApplicationContext());
 
-                Log.i("Tutorial", "Initialized Amplify");
-            } catch (AmplifyException e) {
-                Log.e("Tutorial", "Could not initialize Amplify", e);
-            }
+        // configuration
+//            try {
+//                Amplify.addPlugin(new AWSDataStorePlugin());
+//                Amplify.addPlugin(new AWSApiPlugin());
+//                Amplify.addPlugin(new AWSCognitoAuthPlugin());
+//                Amplify.addPlugin(new AWSS3StoragePlugin());
+//                Amplify.configure(getApplicationContext());
+//
+//                Log.i("Tutorial", "Initialized Amplify");
+//            } catch (AmplifyException e) {
+//                Log.e("Tutorial", "Could not initialize Amplify", e);
+//            }
+        getUserName();
 
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -59,8 +67,28 @@ public class Profile extends AppCompatActivity {
                     }
                 });
 
+        Amplify.API.query(ModelQuery.list(User.class,User.NAME.eq(userName)),
+                success -> {
+//            currentUser=success.getData();
+                    for (User user:success.getData())
+                    {
+                        currentUser=user;
+                    }
+                    Log.i(TAG, "success ");
+                },
+                error->{ Log.i(TAG, "error ");}
+                );
 
-        getUserName();
+        findViewById(R.id.submitPost).setOnClickListener(view ->{
+            EditText post=findViewById(R.id.postDesc);
+            Post newPost=Post.builder()
+                    .image(userImageFileName)
+                    .userId(currentUser.getId())
+                    .body(post.getText().toString())
+                    .build();
+        });
+
+
             Button addingPhotoBTN = findViewById(R.id.postImageBTN);
 
         ((TextView) findViewById(R.id.userNameText)).setText(userName);
