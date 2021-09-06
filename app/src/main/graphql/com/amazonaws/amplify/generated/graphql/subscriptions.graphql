@@ -1,10 +1,132 @@
 # this is an auto generated file. This will be overwritten
-subscription OnCreateTask {
-  onCreateTask {
+subscription OnCreatePost {
+  onCreatePost {
     id
-    title
+    body
+    image
+    userID
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdatePost {
+  onUpdatePost {
+    id
+    body
+    image
+    userID
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeletePost {
+  onDeletePost {
+    id
+    body
+    image
+    userID
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateUser {
+  onCreateUser {
+    id
+    name
+    profileImage
+    posts {
+      items {
+        id
+        body
+        image
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateUser {
+  onUpdateUser {
+    id
+    name
+    profileImage
+    posts {
+      items {
+        id
+        body
+        image
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteUser {
+  onDeleteUser {
+    id
+    name
+    profileImage
+    posts {
+      items {
+        id
+        body
+        image
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateEvent {
+  onCreateEvent {
+    id
+    name
     description
-    status
+    date
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -12,12 +134,14 @@ subscription OnCreateTask {
     updatedAt
   }
 }
-subscription OnUpdateTask {
-  onUpdateTask {
+subscription OnUpdateEvent {
+  onUpdateEvent {
     id
-    title
+    name
     description
-    status
+    date
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -25,45 +149,14 @@ subscription OnUpdateTask {
     updatedAt
   }
 }
-subscription OnDeleteTask {
-  onDeleteTask {
+subscription OnDeleteEvent {
+  onDeleteEvent {
     id
-    title
+    name
     description
-    status
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-subscription OnCreateNote {
-  onCreateNote {
-    id
-    content
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-subscription OnUpdateNote {
-  onUpdateNote {
-    id
-    content
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-subscription OnDeleteNote {
-  onDeleteNote {
-    id
-    content
+    date
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt

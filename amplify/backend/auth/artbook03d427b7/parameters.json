@@ -1,6 +1,6 @@
 {
     "identityPoolName": "artbook03d427b7_identitypool_03d427b7",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "artboo03d427b7",
     "userPoolName": "artbook03d427b7_userpool_03d427b7",
     "autoVerifiedAttributes": [
