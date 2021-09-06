@@ -30,14 +30,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         configAmplify();
-        try {
-            currentUser = Amplify.Auth.getCurrentUser().getUsername();
-            Intent goToHome = new Intent(this, MainActivity.class);
-            startActivity(goToHome);
-        } catch (RuntimeException error) {
-            Log.i("currentUser", "onCreate: " + error);
-
-        }
+//        try {
+//            currentUser = Amplify.Auth.getCurrentUser().getUsername();
+//            Intent goToHome = new Intent(this, MainActivity.class);
+//            startActivity(goToHome);
+//        } catch (RuntimeException error) {
+//            Log.i("currentUser", "onCreate: " + error);
+//
+//        }
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor preferenceEditor = preferences.edit();
         findViewById(R.id.btnSignIn).setEnabled(!isPasswordEmpty && !isUserEmpty);

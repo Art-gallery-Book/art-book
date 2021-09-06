@@ -15,4 +15,6 @@
     <string name="pick_a_date">Pick a Date</string>
     <string name="location_name">Location Name</string>
     <string name="add_location">Add Location</string>
+    <string name="add_image">Add Image</string>
+    <string name="add_event">Add Event</string>
 </resources>
