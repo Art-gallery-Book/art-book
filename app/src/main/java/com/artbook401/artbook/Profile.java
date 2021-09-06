@@ -4,37 +4,45 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.FileUtils;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.amplifyframework.AmplifyException;
-import com.amplifyframework.api.aws.AWSApiPlugin;
+
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
-import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
-import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Post;
 import com.amplifyframework.datastore.generated.model.User;
-import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
+import com.artbook401.artbook.adapters.PostsAdapter;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class Profile extends AppCompatActivity {
     private static final String TAG ="success" ;
-    String userName ="";
+    String userName = " ";
     String userImageFileName="";
     User currentUser;
+    List <Post> postsList = new ArrayList<>();
+    private PostsAdapter postsAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -43,20 +51,9 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
 
-
-        // configuration
-//            try {
-//                Amplify.addPlugin(new AWSDataStorePlugin());
-//                Amplify.addPlugin(new AWSApiPlugin());
-//                Amplify.addPlugin(new AWSCognitoAuthPlugin());
-//                Amplify.addPlugin(new AWSS3StoragePlugin());
-//                Amplify.configure(getApplicationContext());
-//
-//                Log.i("Tutorial", "Initialized Amplify");
-//            } catch (AmplifyException e) {
-//                Log.e("Tutorial", "Could not initialize Amplify", e);
-//            }
         getUserName();
+        getUser();
+
 
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -67,17 +64,7 @@ public class Profile extends AppCompatActivity {
                     }
                 });
 
-        Amplify.API.query(ModelQuery.list(User.class,User.NAME.eq(userName)),
-                success -> {
-//            currentUser=success.getData();
-                    for (User user:success.getData())
-                    {
-                        currentUser=user;
-                    }
-                    Log.i(TAG, "success ");
-                },
-                error->{ Log.i(TAG, "error ");}
-                );
+
 
         findViewById(R.id.submitPost).setOnClickListener(view ->{
             EditText post=findViewById(R.id.postDesc);
@@ -86,7 +73,15 @@ public class Profile extends AppCompatActivity {
                     .userId(currentUser.getId())
                     .body(post.getText().toString())
                     .build();
+
+            Amplify.API.mutate(ModelMutation.create(newPost) ,
+                    res -> {
+                        Log.i(TAG, "silentSignIn: user create successfully");
+                        getUser();
+                    },
+                    error -> Log.e(TAG, "silentSignIn: error" ));
         });
+
 
 
             Button addingPhotoBTN = findViewById(R.id.postImageBTN);
@@ -101,10 +96,22 @@ public class Profile extends AppCompatActivity {
             chooseFile= Intent.createChooser(chooseFile,"Choose An Image");
             someActivityResultLauncher.launch(chooseFile);
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserName();
+
     }
 
     public void getUserName(){
-        userName = Amplify.Auth.getCurrentUser().getUsername();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        userName = sharedPreferences.getString("userName" , "  ");
+        Log.i(TAG, "getUserName: hello again :" + userName);
+
     }
 
 
@@ -138,5 +145,36 @@ public class Profile extends AppCompatActivity {
         );
 
     }
+
+    public void getUser(){
+        Amplify.API.query(ModelQuery.list(User.class , User.NAME.eq(userName)),
+                success -> {
+//            currentUser=success.getData();
+                    Log.i(TAG, "onCreate: hi queryyyyyyyyyyyyyyyyy" + success.getData());
+                    for (User user:success.getData())
+                    {
+
+                        currentUser=user;
+
+//                        postsList.addAll(user.getPosts());
+                        postsAdapter = new PostsAdapter(user.getPosts());
+                        LinearLayoutManager postsManager = new LinearLayoutManager(getApplicationContext(),
+                                LinearLayoutManager.VERTICAL, false);
+                        RecyclerView postsRecycleView = findViewById(R.id.postsRV);
+                        runOnUiThread(() -> {
+                            postsRecycleView.setLayoutManager(postsManager);
+                            postsRecycleView.setAdapter(postsAdapter);
+                        });
+
+                        Log.i(TAG, "onCreate: hi useeeeeeeeeer");
+
+                    }
+                    Log.i(TAG, "success ");
+                },
+                error->{ Log.i(TAG, "error " + error);}
+        );
+
+    }
+
 
 }
