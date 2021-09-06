@@ -17,6 +17,7 @@
         android:inputType="text"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <EditText
         android:id="@+id/emailSignup"
         android:layout_width="match_parent"
@@ -37,16 +38,42 @@
         android:inputType="textPassword"
         app:layout_constraintTop_toBottomOf="@+id/emailSignup" />
 
-    <Button
-        android:id="@+id/btnSignup"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/passwordSignup"
         android:layout_marginTop="30dp"
-        android:background="@drawable/button"
-        android:text="@string/register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordSignup" />
+        android:gravity="center"
+    >
+
+        <Button
+            android:id="@+id/btnSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/button"
+            android:text="@string/register"
+            android:layout_marginRight="10dp"/>
+
+        <Button
+            android:id="@+id/profileImageBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/button"
+            android:text="Profile Image"/>
+
+
+    </LinearLayout>
+<!--    <Button-->
+<!--        android:id="@+id/btnSignup"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:background="@drawable/button"-->
+<!--        android:text="@string/register"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/passwordSignup" />-->
+
 
     <TextView
         android:id="@+id/btnSignInSignup"
