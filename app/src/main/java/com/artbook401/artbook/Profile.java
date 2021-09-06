@@ -4,6 +4,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,16 +20,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.amplifyframework.AmplifyException;
-import com.amplifyframework.api.aws.AWSApiPlugin;
+
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
-import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
-import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Post;
 import com.amplifyframework.datastore.generated.model.User;
-import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
+import com.artbook401.artbook.adapters.PostsAdapter;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -40,6 +41,8 @@ public class Profile extends AppCompatActivity {
     String userName = " ";
     String userImageFileName="";
     User currentUser;
+    List <Post> postsList = new ArrayList<>();
+    private PostsAdapter postsAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -48,25 +51,9 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
 
-
         getUserName();
+        getUser();
 
-        Amplify.API.query(ModelQuery.list(User.class , User.NAME.eq(userName)),
-                success -> {
-//            currentUser=success.getData();
-                    Log.i(TAG, "onCreate: hi queryyyyyyyyyyyyyyyyy" + success.getData());
-                    for (User user:success.getData())
-                    {
-
-                        currentUser=user;
-                        Log.i(TAG, "onCreate: hi useeeeeeeeeer");
-
-                    }
-                    Log.i(TAG, "success ");
-                },
-                error->{ Log.i(TAG, "error " + error);}
-        );
-        
 
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -88,7 +75,10 @@ public class Profile extends AppCompatActivity {
                     .build();
 
             Amplify.API.mutate(ModelMutation.create(newPost) ,
-                    res -> Log.i(TAG, "silentSignIn: user create successfully"),
+                    res -> {
+                        Log.i(TAG, "silentSignIn: user create successfully");
+                        getUser();
+                    },
                     error -> Log.e(TAG, "silentSignIn: error" ));
         });
 
@@ -106,6 +96,7 @@ public class Profile extends AppCompatActivity {
             chooseFile= Intent.createChooser(chooseFile,"Choose An Image");
             someActivityResultLauncher.launch(chooseFile);
         });
+
     }
 
     @Override
@@ -154,5 +145,36 @@ public class Profile extends AppCompatActivity {
         );
 
     }
+
+    public void getUser(){
+        Amplify.API.query(ModelQuery.list(User.class , User.NAME.eq(userName)),
+                success -> {
+//            currentUser=success.getData();
+                    Log.i(TAG, "onCreate: hi queryyyyyyyyyyyyyyyyy" + success.getData());
+                    for (User user:success.getData())
+                    {
+
+                        currentUser=user;
+
+//                        postsList.addAll(user.getPosts());
+                        postsAdapter = new PostsAdapter(user.getPosts());
+                        LinearLayoutManager postsManager = new LinearLayoutManager(getApplicationContext(),
+                                LinearLayoutManager.VERTICAL, false);
+                        RecyclerView postsRecycleView = findViewById(R.id.postsRV);
+                        runOnUiThread(() -> {
+                            postsRecycleView.setLayoutManager(postsManager);
+                            postsRecycleView.setAdapter(postsAdapter);
+                        });
+
+                        Log.i(TAG, "onCreate: hi useeeeeeeeeer");
+
+                    }
+                    Log.i(TAG, "success ");
+                },
+                error->{ Log.i(TAG, "error " + error);}
+        );
+
+    }
+
 
 }
