@@ -67,7 +67,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            body = itemView.findViewById(R.id.textDesc);
+            body = itemView.findViewById(R.id.eventDate);
             image = itemView.findViewById(R.id.postImg);
 
         }
