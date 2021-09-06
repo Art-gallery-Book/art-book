@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable-v24/ic_login_bk.xml" value="0.2703125" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable-v24/login_shape_bk.xml" value="0.2703125" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable/buttom.xml" value="0.2703125" />
@@ -12,6 +13,7 @@
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/layout_register.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/STUDENT/art-book/app/src/main/res/layout/activity_main.xml" value="0.11005434782608696" />
         <entry key="..\:/Users/STUDENT/art-book/app/src/main/res/layout/activity_sign_up.xml" value="0.21" />
+
       </map>
     </option>
   </component>
