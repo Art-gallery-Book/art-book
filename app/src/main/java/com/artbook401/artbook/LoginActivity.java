@@ -23,23 +23,29 @@ public class LoginActivity extends AppCompatActivity {
     private Boolean isUserEmpty = true;
     private Boolean isPasswordEmpty = true;
     private static final String TAG = "SIGNIN";
-    private String currentUser = "";
+    private String currentUser = " ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         configAmplify();
-//        try {
-//            currentUser = Amplify.Auth.getCurrentUser().getUsername();
-//            Intent goToHome = new Intent(this, MainActivity.class);
-//            startActivity(goToHome);
-//        } catch (RuntimeException error) {
-//            Log.i("currentUser", "onCreate: " + error);
-//
-//        }
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor preferenceEditor = preferences.edit();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor preferenceEditor = sharedPreferences.edit();
+
+        try {
+            currentUser = Amplify.Auth.getCurrentUser().getUsername();
+            preferenceEditor.putString("userName" ,currentUser);
+            Log.i(TAG, "onCreate: what haaaaaaaaaaaaaapen !!!" + currentUser);
+            preferenceEditor.apply();
+
+            Intent goToHome = new Intent(this, MainActivity.class);
+            startActivity(goToHome);
+        } catch (RuntimeException error) {
+            Log.i("currentUser", "onCreate: " + error);
+
+        }
+
         findViewById(R.id.btnSignIn).setEnabled(!isPasswordEmpty && !isUserEmpty);
 
         TextView userNameSignIn = findViewById(R.id.userNameSignIn);
@@ -95,6 +101,8 @@ public class LoginActivity extends AppCompatActivity {
                             Log.i("AuthQuickstart", result.isSignInComplete() ? "Sign in succeeded" : "Sign in not complete");
 
                             preferenceEditor.putString("userName", userName);
+                            preferenceEditor.apply();
+
                             Intent signInToHome = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(signInToHome);
                         },
