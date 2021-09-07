@@ -18,12 +18,15 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 
+import java.io.File;
+
 
 public class LoginActivity extends AppCompatActivity {
     private Boolean isUserEmpty = true;
     private Boolean isPasswordEmpty = true;
     private static final String TAG = "SIGNIN";
     private String currentUser = " ";
+    private String userID = " ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,9 @@ public class LoginActivity extends AppCompatActivity {
 
         try {
             currentUser = Amplify.Auth.getCurrentUser().getUsername();
+            userID = Amplify.Auth.getCurrentUser().getUserId();
             preferenceEditor.putString("userName" ,currentUser);
+            preferenceEditor.putString("userID" ,userID);
             Log.i(TAG, "onCreate: what haaaaaaaaaaaaaapen !!!" + currentUser);
             preferenceEditor.apply();
 
@@ -101,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.i("AuthQuickstart", result.isSignInComplete() ? "Sign in succeeded" : "Sign in not complete");
 
                             preferenceEditor.putString("userName", userName);
+                            preferenceEditor.putString("userID", userID);
                             preferenceEditor.apply();
 
                             Intent signInToHome = new Intent(getApplicationContext(), MainActivity.class);
@@ -138,4 +144,5 @@ public class LoginActivity extends AppCompatActivity {
             Log.e("Tutorial", "Could not initialize Amplify", e);
         }
     }
+
 }

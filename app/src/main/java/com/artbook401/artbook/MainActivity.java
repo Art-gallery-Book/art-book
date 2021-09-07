@@ -73,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_Events){
             startActivity(new Intent(getApplicationContext() , EventsActivity.class)) ;
         }
+        if (id == R.id.users_nav){
+            startActivity(new Intent(getApplicationContext() , Users.class)) ;
+        }
         if (id == R.id.nav_logout){
             Amplify.Auth.signOut(
                     () -> {
