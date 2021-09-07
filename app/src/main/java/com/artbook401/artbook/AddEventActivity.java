@@ -41,7 +41,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddEventActivity extends AppCompatActivity {
+public class AddEventActivity extends NavBarActivity {
     private static final String TAG ="addEvent" ;
     private EditText edittext;
     private final Calendar myCalendar = Calendar.getInstance();
