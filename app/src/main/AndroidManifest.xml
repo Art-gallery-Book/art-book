@@ -14,14 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Artbook">
         <activity
-            android:name=".NavBarActivity"
-            android:exported="true"
-            android:label="@string/title_activity_nav_bar"
-            android:theme="@style/Theme.Artbook.NoActionBar" />
-        <activity
+            android:parentActivityName=".MainActivity"
             android:name=".EventDetailActivity"
             android:exported="true" />
         <activity
+            android:parentActivityName=".MainActivity"
             android:name=".EventsActivity"
             android:exported="true" />
 
@@ -30,10 +27,11 @@
             android:value="AIzaSyDIcwMW8sSJ2U7_Gcy6gm9msK5aY8W0hGE" />
 
         <activity
+            android:parentActivityName=".MainActivity"
             android:name=".AddEventActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Artbook.NoActionBar"/>
+            android:exported="true" />
         <activity
+            android:parentActivityName=".MainActivity"
             android:name=".Profile"
             android:exported="true" />
         <activity android:name=".ConfirmActivity" />

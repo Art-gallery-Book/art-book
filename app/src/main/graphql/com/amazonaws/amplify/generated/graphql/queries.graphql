@@ -80,6 +80,7 @@ query SyncUsers(
         nextToken
         startedAt
       }
+      following
       _version
       _deleted
       _lastChangedAt
@@ -110,6 +111,7 @@ query GetUser($id: ID!) {
       nextToken
       startedAt
     }
+    following
     _version
     _deleted
     _lastChangedAt
@@ -131,6 +133,7 @@ query ListUsers(
         nextToken
         startedAt
       }
+      following
       _version
       _deleted
       _lastChangedAt

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.amplifyframework.core.Amplify;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -65,6 +66,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.nav_account){
             startActivity(new Intent(getApplicationContext() , Profile.class)) ;
+        }
+        if (id == R.id.nav_Add_Event){
+            startActivity(new Intent(getApplicationContext() , AddEventActivity.class)) ;
+        }
+        if (id == R.id.nav_Events){
+            startActivity(new Intent(getApplicationContext() , EventsActivity.class)) ;
+        }
+        if (id == R.id.nav_logout){
+            Amplify.Auth.signOut(
+                    () -> {
+                        Log.i("AuthQuickstart", "Signed out successfully");
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                    },
+                    error -> Log.e("AuthQuickstart", error.toString())
+            );
         }
         return false;
     }

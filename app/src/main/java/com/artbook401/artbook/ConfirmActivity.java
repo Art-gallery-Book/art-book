@@ -27,7 +27,9 @@ import com.amplifyframework.datastore.generated.model.User;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ConfirmActivity extends AppCompatActivity {
     private static final String TAG ="ConfirmActivity" ;
@@ -88,10 +90,13 @@ public class ConfirmActivity extends AppCompatActivity {
     }
 
     private void silentSignIn(String userName, String password,String imageName,SharedPreferences preferences){
-        User newUser = User.builder().name(userName).profileImage(imageName).build();
+        List<String> test=new ArrayList<>();
+        User newUser = User.builder().name(userName).profileImage(imageName).following(test).build();
+
         Amplify.API.mutate(ModelMutation.create(newUser) ,
         res -> Log.i(TAG, "silentSignIn: user create successfully"),
         error -> Log.e(TAG, "silentSignIn: error" ));
+
         Amplify.Auth.signIn(
                 userName,
                 password,
@@ -99,13 +104,11 @@ public class ConfirmActivity extends AppCompatActivity {
                     Log.i("AuthQuickstart", result.isSignInComplete() ? "Sign in succeeded" : "Sign in not complete");
                     @SuppressLint("CommitPrefEdits") SharedPreferences.Editor preferenceEditor = preferences.edit();
                     preferenceEditor.putString("userName", userName);
-
                     Intent signInToHome = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(signInToHome);
                 },
                 error -> Log.e("AuthQuickstart", error.toString())
         );
     }
-
 
 }
