@@ -56,9 +56,7 @@ public class AddEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
-//        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-//                Uri.parse("geo:37.7749,-122.4194"));
-//        startActivity(intent);
+
 // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
 
 //        ActivityResultLauncher<Intent> AddImageLauncher = registerForActivityResult(

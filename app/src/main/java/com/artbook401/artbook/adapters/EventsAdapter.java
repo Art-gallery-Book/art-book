@@ -33,8 +33,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.postcard, parent, false);
-        return new ViewHolder(view,listener);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.events_adapter, parent, false);
+        return new ViewHolder(view, listener);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         return eventList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder{
         TextView eventName;
         TextView eventDate;
 
