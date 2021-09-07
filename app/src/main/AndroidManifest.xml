@@ -14,26 +14,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Artbook">
         <activity
-            android:parentActivityName=".MainActivity"
-            android:name=".EventDetailActivity"
+            android:name=".Users"
             android:exported="true" />
         <activity
-            android:parentActivityName=".MainActivity"
+            android:name=".EventDetailActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".EventsActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDIcwMW8sSJ2U7_Gcy6gm9msK5aY8W0hGE" />
 
         <activity
-            android:parentActivityName=".MainActivity"
             android:name=".AddEventActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:parentActivityName=".MainActivity"
             android:name=".Profile"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".ConfirmActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -48,7 +51,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Artbook.NoActionBar"/>
+            android:theme="@style/Theme.Artbook.NoActionBar" />
     </application>
 
 </manifest>

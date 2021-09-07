@@ -84,13 +84,14 @@ public class Profile extends AppCompatActivity {
 
         List<String> list=new ArrayList<>();
         list.add("dfb6b0a8-b904-4847-8ddf-1c55cf6e4a2f");
+        list.add("fb577a0f-77b2-49e9-8bcf-78d79352f031");
 //        Log.i("kkkkkkkkk",currentUser.getId());
-User user = User.builder().name("ashqur").id("fb577a0f-77b2-49e9-8bcf-78d79352f031").following(list)
-        .build();
-        Amplify.API.mutate(ModelMutation.update(user),
-                response -> Log.i("MyAmplifyApp", "Todo with id: " + response.getData().getId()),
-                error -> Log.e("MyAmplifyApp", "Create failed", error)
-        );
+//User user = User.builder().name("ashqur").id("fb577a0f-77b2-49e9-8bcf-78d79352f031").following(list)
+//        .build();
+//        Amplify.API.mutate(ModelMutation.update(user),
+//                response -> Log.i("MyAmplifyApp", "Todo with id: " + response.getData().getId()),
+//                error -> Log.e("MyAmplifyApp", "Create failed", error)
+//        );
 
             Button addingPhotoBTN = findViewById(R.id.postImageBTN);
 

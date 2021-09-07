@@ -5,6 +5,10 @@
         android:icon="@mipmap/ic_launcher_person"
         android:title="My Account" />
 
+    <item android:id="@+id/users_nav"
+        android:icon="@mipmap/ic_launcher_person"
+        android:title="Find New Users" />
+
     <item android:id="@+id/nav_Add_Event"
         android:icon="@mipmap/ic_launcher_setting"
         android:title="Add Event" />

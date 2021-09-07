@@ -52,7 +52,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 },
                 error -> Log.e("MyAmplifyApp", "URL generation failure", error)
         );
-//        holder.image.setText(post.getImage());
     }
 
     @Override
