@@ -4,19 +4,16 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -32,16 +29,11 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
-public class AddEventActivity extends NavBarActivity {
+public class AddEventActivity extends AppCompatActivity {
     private static final String TAG ="addEvent" ;
     private EditText edittext;
     private final Calendar myCalendar = Calendar.getInstance();
@@ -56,6 +48,11 @@ public class AddEventActivity extends NavBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
+//        ActionBar actionBar = getSupportActionBar();
+//
+//        // showing the back button in action bar
+//        assert actionBar != null;
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 
 // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
 
@@ -133,6 +130,11 @@ public class AddEventActivity extends NavBarActivity {
 
     }
 
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//       onBackPressed();
+//        return super.onSupportNavigateUp();
+//    }
     private void pickLocation(Intent data){
         Place place = PlacePicker.getPlace(data, this);
         String toastMsg = String.format("Place: %s", place.getName());

@@ -10,6 +10,7 @@ type User @model{
   name: String!
   profileImage:String
   posts: [Post] @connection(keyName: "byUser", fields: ["id"])
+  following:[String]
 }
 
 type Event @model{

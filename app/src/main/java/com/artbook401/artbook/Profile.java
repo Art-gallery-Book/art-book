@@ -82,7 +82,15 @@ public class Profile extends AppCompatActivity {
                     error -> Log.e(TAG, "silentSignIn: error" ));
         });
 
-
+        List<String> list=new ArrayList<>();
+        list.add("dfb6b0a8-b904-4847-8ddf-1c55cf6e4a2f");
+//        Log.i("kkkkkkkkk",currentUser.getId());
+User user = User.builder().name("ashqur").id("fb577a0f-77b2-49e9-8bcf-78d79352f031").following(list)
+        .build();
+        Amplify.API.mutate(ModelMutation.update(user),
+                response -> Log.i("MyAmplifyApp", "Todo with id: " + response.getData().getId()),
+                error -> Log.e("MyAmplifyApp", "Create failed", error)
+        );
 
             Button addingPhotoBTN = findViewById(R.id.postImageBTN);
 
@@ -153,9 +161,7 @@ public class Profile extends AppCompatActivity {
                     Log.i(TAG, "onCreate: hi queryyyyyyyyyyyyyyyyy" + success.getData());
                     for (User user:success.getData())
                     {
-
                         currentUser=user;
-
 //                        postsList.addAll(user.getPosts());
                         postsAdapter = new PostsAdapter(user.getPosts());
                         LinearLayoutManager postsManager = new LinearLayoutManager(getApplicationContext(),
@@ -175,6 +181,8 @@ public class Profile extends AppCompatActivity {
         );
 
     }
+
+
 
 
 }

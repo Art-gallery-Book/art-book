@@ -5,9 +5,14 @@
         android:icon="@mipmap/ic_launcher_person"
         android:title="My Account" />
 
-    <item android:id="@+id/nav_setting"
+    <item android:id="@+id/nav_Add_Event"
         android:icon="@mipmap/ic_launcher_setting"
-        android:title="Setting" />
+        android:title="Add Event" />
+
+    <item android:id="@+id/nav_Events"
+        android:iconTint="@color/purple"
+        android:icon="@mipmap/ic_launcher_setting"
+        android:title="Events" />
 
     <item android:id="@+id/nav_logout"
         android:icon="@mipmap/ic_launcher_logout"
