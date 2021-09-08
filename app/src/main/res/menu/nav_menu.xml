@@ -2,24 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/nav_account"
-        android:icon="@mipmap/ic_launcher_person"
+        android:icon="@drawable/ic_user"
         android:title="My Account" />
 
     <item android:id="@+id/users_nav"
-        android:icon="@mipmap/ic_launcher_person"
-        android:enabled="true"
+        android:icon="@drawable/ic_add_friend"
         android:title="Find New Users" />
 
     <item android:id="@+id/nav_Add_Event"
-
+        android:icon="@drawable/ic_add_event"
         android:title="Add Event" />
 
     <item android:id="@+id/nav_Events"
         android:iconTint="@color/purple"
-        android:icon="@mipmap/ic_launcher_setting"
+        android:icon="@drawable/ic_event"
         android:title="Events" />
 
     <item android:id="@+id/nav_logout"
-        android:icon="@mipmap/ic_launcher_logout"
+        android:icon="@drawable/ic_logout"
         android:title="Logout" />
+
 </menu>

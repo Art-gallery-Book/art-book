@@ -91,7 +91,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
     private void silentSignIn(String userName, String password,String imageName,SharedPreferences preferences){
         List<String> test=new ArrayList<>();
-        User newUser = User.builder().name(userName).profileImage(imageName).following(test).build();
+        User newUser = User.builder().name(userName).profileImage("profile1.jpg").following(test).build();
 
         Amplify.API.mutate(ModelMutation.create(newUser) ,
         res -> Log.i(TAG, "silentSignIn: user create successfully"),
