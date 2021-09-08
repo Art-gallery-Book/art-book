@@ -1,40 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="409dp"
-        android:layout_height="218dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="74dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="439dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <TextView
             android:id="@+id/eventsAdaptersName"
             android:layout_width="328dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="78dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.382"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eventsAdapterDate" />
-
-        <TextView
-            android:id="@+id/eventsAdapterDate"
-            android:layout_width="328dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginBottom="38dp"
-            app:layout_constraintBottom_toTopOf="@+id/eventsAdaptersName"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/eventsAdapterDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.382"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/eventsAdapterDate"
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.382"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventsAdaptersName" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+

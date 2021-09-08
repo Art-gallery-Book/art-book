@@ -24,10 +24,12 @@ public final class User implements Model {
   public static final QueryField ID = field("User", "id");
   public static final QueryField NAME = field("User", "name");
   public static final QueryField PROFILE_IMAGE = field("User", "profileImage");
+  public static final QueryField FOLLOWING = field("User", "following");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String name;
   private final @ModelField(targetType="String") String profileImage;
   private final @ModelField(targetType="Post") @HasMany(associatedWith = "userID", type = Post.class) List<Post> posts = null;
+  private final @ModelField(targetType="String") List<String> following;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
@@ -46,6 +48,10 @@ public final class User implements Model {
       return posts;
   }
   
+  public List<String> getFollowing() {
+      return following;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -54,10 +60,11 @@ public final class User implements Model {
       return updatedAt;
   }
   
-  private User(String id, String name, String profileImage) {
+  private User(String id, String name, String profileImage, List<String> following) {
     this.id = id;
     this.name = name;
     this.profileImage = profileImage;
+    this.following = following;
   }
   
   @Override
@@ -71,6 +78,7 @@ public final class User implements Model {
       return ObjectsCompat.equals(getId(), user.getId()) &&
               ObjectsCompat.equals(getName(), user.getName()) &&
               ObjectsCompat.equals(getProfileImage(), user.getProfileImage()) &&
+              ObjectsCompat.equals(getFollowing(), user.getFollowing()) &&
               ObjectsCompat.equals(getCreatedAt(), user.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), user.getUpdatedAt());
       }
@@ -82,6 +90,7 @@ public final class User implements Model {
       .append(getId())
       .append(getName())
       .append(getProfileImage())
+      .append(getFollowing())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -95,6 +104,7 @@ public final class User implements Model {
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("name=" + String.valueOf(getName()) + ", ")
       .append("profileImage=" + String.valueOf(getProfileImage()) + ", ")
+      .append("following=" + String.valueOf(getFollowing()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -127,6 +137,7 @@ public final class User implements Model {
     return new User(
       id,
       null,
+      null,
       null
     );
   }
@@ -134,7 +145,8 @@ public final class User implements Model {
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
       name,
-      profileImage);
+      profileImage,
+      following);
   }
   public interface NameStep {
     BuildStep name(String name);
@@ -145,6 +157,7 @@ public final class User implements Model {
     User build();
     BuildStep id(String id) throws IllegalArgumentException;
     BuildStep profileImage(String profileImage);
+    BuildStep following(List<String> following);
   }
   
 
@@ -152,6 +165,7 @@ public final class User implements Model {
     private String id;
     private String name;
     private String profileImage;
+    private List<String> following;
     @Override
      public User build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -159,7 +173,8 @@ public final class User implements Model {
         return new User(
           id,
           name,
-          profileImage);
+          profileImage,
+          following);
     }
     
     @Override
@@ -175,22 +190,40 @@ public final class User implements Model {
         return this;
     }
     
+    @Override
+     public BuildStep following(List<String> following) {
+        this.following = following;
+        return this;
+    }
+    
     /** 
+     * WARNING: Do not set ID when creating a new object. Leave this blank and one will be auto generated for you.
+     * This should only be set when referring to an already existing object.
      * @param id id
      * @return Current Builder instance, for fluent method chaining
+     * @throws IllegalArgumentException Checks that ID is in the proper format
      */
-    public BuildStep id(String id) {
+    public BuildStep id(String id) throws IllegalArgumentException {
         this.id = id;
+        
+        try {
+            UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
+        } catch (Exception exception) {
+          throw new IllegalArgumentException("Model IDs must be unique in the format of UUID.",
+                    exception);
+        }
+        
         return this;
     }
   }
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String name, String profileImage) {
+    private CopyOfBuilder(String id, String name, String profileImage, List<String> following) {
       super.id(id);
       super.name(name)
-        .profileImage(profileImage);
+        .profileImage(profileImage)
+        .following(following);
     }
     
     @Override
@@ -201,6 +234,11 @@ public final class User implements Model {
     @Override
      public CopyOfBuilder profileImage(String profileImage) {
       return (CopyOfBuilder) super.profileImage(profileImage);
+    }
+    
+    @Override
+     public CopyOfBuilder following(List<String> following) {
+      return (CopyOfBuilder) super.following(following);
     }
   }
   

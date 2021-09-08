@@ -12,8 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Post;
+import com.amplifyframework.datastore.generated.model.User;
 import com.artbook401.artbook.R;
 import com.squareup.picasso.Picasso;
 
@@ -52,7 +54,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 },
                 error -> Log.e("MyAmplifyApp", "URL generation failure", error)
         );
-//        holder.image.setText(post.getImage());
+
+        Amplify.API.query(ModelQuery.get(User.class, post.getUserId()),
+                success -> {
+                    runOnUiThread(() -> {
+                        holder.myUser.setText(success.getData().getName());
+                    });
+                },
+                error -> {
+                   Log.e("MyAmplifyApp", "URL generation failure", error);
+                });
     }
 
     @Override
@@ -62,14 +73,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView body;
+        private final TextView myUser;
         private final ImageView image;
 
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             body = itemView.findViewById(R.id.eventDate);
+            myUser = itemView.findViewById(R.id.userNameText);
             image = itemView.findViewById(R.id.postImg);
-
         }
     }
 }

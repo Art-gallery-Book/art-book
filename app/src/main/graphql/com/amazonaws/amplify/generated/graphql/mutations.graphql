@@ -70,6 +70,7 @@ mutation CreateUser(
       nextToken
       startedAt
     }
+    following
     _version
     _deleted
     _lastChangedAt
@@ -100,6 +101,7 @@ mutation UpdateUser(
       nextToken
       startedAt
     }
+    following
     _version
     _deleted
     _lastChangedAt
@@ -130,6 +132,7 @@ mutation DeleteUser(
       nextToken
       startedAt
     }
+    following
     _version
     _deleted
     _lastChangedAt

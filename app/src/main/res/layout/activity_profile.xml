@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/userImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -17,10 +17,21 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <Button
+        android:id="@+id/profileImageBTN"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="103dp"
+        android:layout_height="31dp"
+        android:background="@drawable/button"
+        android:text="Profile Image"
+        android:textSize="10dp"
+        tools:layout_editor_absoluteX="152dp"
+        tools:layout_editor_absoluteY="140dp" />
+
     <TextView
         android:id="@+id/userNameText"
-        android:layout_width="104dp"
-        android:layout_height="19dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -48,11 +59,12 @@
 
         <Button
             android:id="@+id/postImageBTN"
-            android:layout_width="168dp"
+            android:layout_width="100dp"
             android:layout_height="48dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:text="Uplouad Image"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="172dp"
+            android:text="Upload Image"
+            android:textSize="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,8 +83,8 @@
             android:id="@+id/submitPost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="232dp"
+            android:layout_marginTop="16dp"
             android:text="Add"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postDesc" />
@@ -82,9 +94,10 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
         android:text="Add New Post"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userNameText" />
 

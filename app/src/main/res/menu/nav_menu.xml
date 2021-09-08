@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/nav_account"
+        android:icon="@mipmap/ic_launcher_person"
+        android:title="My Account" />
+
+    <item android:id="@+id/users_nav"
+        android:icon="@mipmap/ic_launcher_person"
+        android:title="Find New Users" />
+
+    <item android:id="@+id/nav_Add_Event"
+        android:icon="@mipmap/ic_launcher_setting"
+        android:title="Add Event" />
+
+    <item android:id="@+id/nav_Events"
+        android:iconTint="@color/purple"
+        android:icon="@mipmap/ic_launcher_setting"
+        android:title="Events" />
+
+    <item android:id="@+id/nav_logout"
+        android:icon="@mipmap/ic_launcher_logout"
+        android:title="Logout" />
+
+</menu>

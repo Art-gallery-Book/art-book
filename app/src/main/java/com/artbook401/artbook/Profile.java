@@ -1,5 +1,7 @@
 package com.artbook401.artbook;
 
+import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
@@ -18,6 +20,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Post;
 import com.amplifyframework.datastore.generated.model.User;
 import com.artbook401.artbook.adapters.PostsAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,7 +68,22 @@ public class Profile extends AppCompatActivity {
                     }
                 });
 
+        ActivityResultLauncher<Intent> someActivityResultLauncherPic = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        assert result.getData() != null;
+                        onChooseFileProfPic(result.getData().getData());
+                    }
+                });
 
+        Button addingPhotoBTNProfPic = findViewById(R.id.profileImageBTN);
+        addingPhotoBTNProfPic.setOnClickListener(view -> {
+            Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+            chooseFile.setType("image/*");
+            chooseFile= Intent.createChooser(chooseFile,"Choose An Image");
+            someActivityResultLauncherPic.launch(chooseFile);
+        });
 
         findViewById(R.id.submitPost).setOnClickListener(view ->{
             EditText post=findViewById(R.id.postDesc);
@@ -82,13 +101,8 @@ public class Profile extends AppCompatActivity {
                     error -> Log.e(TAG, "silentSignIn: error" ));
         });
 
-
-
             Button addingPhotoBTN = findViewById(R.id.postImageBTN);
-
         ((TextView) findViewById(R.id.userNameText)).setText(userName);
-//        ((ImageView) findViewById(R.id.userImageView)).setImageBitmap();
-
 
         addingPhotoBTN.setOnClickListener(view -> {
             Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
@@ -163,12 +177,58 @@ public class Profile extends AppCompatActivity {
                             postsRecycleView.setAdapter(postsAdapter);
                         });
 
-                        Log.i(TAG, "onCreate: hi useeeeeeeeeer");
+                        Log.i(TAG, "onCreate: hi useeeeeeeeeer"+ currentUser.getName());
+                        getProfileImage();
 
                     }
                     Log.i(TAG, "success ");
                 },
                 error->{ Log.i(TAG, "error " + error);}
+        );
+
+    }
+
+    public void getProfileImage(){
+       ImageView profileImage = findViewById(R.id.userImageView);
+        Amplify.Storage.getUrl(
+                currentUser.getProfileImage(),
+                result -> {
+                    Log.i("MyAmplifyApp", "Successfully generated: " + result.getUrl());
+                    runOnUiThread(() -> {
+                        Picasso.get().load(String.valueOf(result.getUrl())).into(profileImage);
+                    });
+                },
+                error -> Log.e("MyAmplifyApp", "URL generation failure", error)
+        );
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    public void onChooseFileProfPic(Uri uri){
+        userImageFileName = new Date().toString() + ".png";
+        File uploadFile = new File(getApplicationContext().getFilesDir(), "uploadFile");
+
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            FileUtils.copy(inputStream, new FileOutputStream(uploadFile));
+//            isImageEmpty = false;
+        } catch (Exception exception) {
+            Log.e("onChooseFile", "onActivityResult: file upload failed" + exception.toString());
+        }
+
+        Amplify.Storage.uploadFile(
+                userImageFileName,
+                uploadFile,
+                success -> {
+
+                    Log.i("onChooseFile", "uploadFileToS3: succeeded " + success.getKey());
+                    Toast.makeText(getApplicationContext(), "Image Successfully Uploaded", Toast.LENGTH_SHORT).show();
+//                    runOnUiThread(() -> findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty && !isImageEmpty));
+                },
+                error -> {
+                    Log.e("onChooseFile", "uploadFileToS3: failed " + error.toString());
+                    Toast.makeText(getApplicationContext(), "Image Upload failed", Toast.LENGTH_SHORT).show();
+
+                }
         );
 
     }

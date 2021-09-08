@@ -54,12 +54,7 @@
             android:text="@string/register"
             android:layout_marginRight="10dp"/>
 
-        <Button
-            android:id="@+id/profileImageBTN"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/button"
-            android:text="Profile Image"/>
+
 
 
     </LinearLayout>
