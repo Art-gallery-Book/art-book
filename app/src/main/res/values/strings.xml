@@ -28,4 +28,8 @@
 
     <string name="open">Open</string>
     <string name="close">Close</string>
+
+
+    <string name="login_name_hint">Name</string>
+    <string name="login_mobile_number_hint">Mobile Number</string>
 </resources>
