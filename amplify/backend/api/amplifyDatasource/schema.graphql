@@ -3,6 +3,7 @@ type Post @model @key(name: "byUser", fields: ["userID"]){
   body: String
   image: String!
   userID: ID!
+  owner: String!
 }
 
 type User @model{

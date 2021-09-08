@@ -32,6 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Boolean isPasswordEmpty = true;
     private Boolean isEmailEmpty = true;
     private  String userImageFileName;
+    private Boolean isImageEmpty = true;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -59,7 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
-        findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty);
+        findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty && !isImageEmpty);
 
         TextView userNameSignup = findViewById(R.id.userNameSignup);
         userNameSignup.addTextChangedListener(new TextWatcher() {
@@ -77,7 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 //findViewById(R.id.btnSignIn).setEnabled(false);
                 isUserEmpty = editable.toString().equals("");
-                findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty);
+                findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty && !isImageEmpty);
 
             }
         });
@@ -97,7 +98,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 isPasswordEmpty = editable.toString().equals("");
 
-                findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty);
+                findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty && !isImageEmpty);
             }
         });
 
@@ -117,7 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 isEmailEmpty = editable.toString().equals("");
 
-                findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty);
+                findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty && !isImageEmpty);
             }
         });
 
@@ -160,9 +161,12 @@ public class SignUpActivity extends AppCompatActivity {
                 userImageFileName,
                 uploadFile,
                 success -> {
+                    isImageEmpty = false;
                     Log.i("onChooseFile", "uploadFileToS3: succeeded " + success.getKey());
                     Toast.makeText(getApplicationContext(), "Image Successfully Uploaded", Toast.LENGTH_SHORT).show();
-
+                    runOnUiThread(() -> {
+                        findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty);
+                    });
                 },
                 error -> {
                     Log.e("onChooseFile", "uploadFileToS3: failed " + error.toString());

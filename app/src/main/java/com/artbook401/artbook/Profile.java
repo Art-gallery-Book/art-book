@@ -1,5 +1,7 @@
 package com.artbook401.artbook;
 
+import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
@@ -18,6 +20,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Post;
 import com.amplifyframework.datastore.generated.model.User;
 import com.artbook401.artbook.adapters.PostsAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -173,7 +177,8 @@ public class Profile extends AppCompatActivity {
                             postsRecycleView.setAdapter(postsAdapter);
                         });
 
-                        Log.i(TAG, "onCreate: hi useeeeeeeeeer");
+                        Log.i(TAG, "onCreate: hi useeeeeeeeeer"+ currentUser.getName());
+                        getProfileImage();
 
                     }
                     Log.i(TAG, "success ");
@@ -181,6 +186,20 @@ public class Profile extends AppCompatActivity {
                 error->{ Log.i(TAG, "error " + error);}
         );
 
+    }
+
+    public void getProfileImage(){
+       ImageView profileImage = findViewById(R.id.userImageView);
+        Amplify.Storage.getUrl(
+                currentUser.getProfileImage(),
+                result -> {
+                    Log.i("MyAmplifyApp", "Successfully generated: " + result.getUrl());
+                    runOnUiThread(() -> {
+                        Picasso.get().load(String.valueOf(result.getUrl())).into(profileImage);
+                    });
+                },
+                error -> Log.e("MyAmplifyApp", "URL generation failure", error)
+        );
     }
 
 
