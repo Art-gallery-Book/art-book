@@ -41,11 +41,13 @@ import java.util.List;
 
 
 public class Profile extends AppCompatActivity {
-    private static final String TAG ="success" ;
+    private static final String TAG = "success";
     String userName = " ";
-    String userImageFileName="";
+    String userImageFileName = "";
+    String userProfileImageFileName = "";
     User currentUser;
-    List <Post> postsList = new ArrayList<>();
+    private User oldUser;
+    List<Post> postsList = new ArrayList<>();
     private PostsAdapter postsAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -53,7 +55,7 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        findViewById(R.id.submitPost).setEnabled(false);
 
         getUserName();
         getUser();
@@ -81,33 +83,33 @@ public class Profile extends AppCompatActivity {
         addingPhotoBTNProfPic.setOnClickListener(view -> {
             Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
             chooseFile.setType("image/*");
-            chooseFile= Intent.createChooser(chooseFile,"Choose An Image");
+            chooseFile = Intent.createChooser(chooseFile, "Choose An Image");
             someActivityResultLauncherPic.launch(chooseFile);
         });
 
-        findViewById(R.id.submitPost).setOnClickListener(view ->{
-            EditText post=findViewById(R.id.postDesc);
-            Post newPost=Post.builder()
+        findViewById(R.id.submitPost).setOnClickListener(view -> {
+            EditText post = findViewById(R.id.postDesc);
+            Post newPost = Post.builder()
                     .image(userImageFileName)
                     .userId(currentUser.getId())
                     .body(post.getText().toString())
                     .build();
 
-            Amplify.API.mutate(ModelMutation.create(newPost) ,
+            Amplify.API.mutate(ModelMutation.create(newPost),
                     res -> {
                         Log.i(TAG, "silentSignIn: user create successfully");
                         getUser();
                     },
-                    error -> Log.e(TAG, "silentSignIn: error" ));
+                    error -> Log.e(TAG, "silentSignIn: error"));
         });
 
-            Button addingPhotoBTN = findViewById(R.id.postImageBTN);
+        Button addingPhotoBTN = findViewById(R.id.postImageBTN);
         ((TextView) findViewById(R.id.userNameText)).setText(userName);
 
         addingPhotoBTN.setOnClickListener(view -> {
             Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
             chooseFile.setType("image/*");
-            chooseFile= Intent.createChooser(chooseFile,"Choose An Image");
+            chooseFile = Intent.createChooser(chooseFile, "Choose An Image");
             someActivityResultLauncher.launch(chooseFile);
         });
 
@@ -120,10 +122,10 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    public void getUserName(){
+    public void getUserName() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        userName = sharedPreferences.getString("userName" , "  ");
+        userName = sharedPreferences.getString("userName", "  ");
         Log.i(TAG, "getUserName: hello again :" + userName);
 
     }
@@ -132,8 +134,8 @@ public class Profile extends AppCompatActivity {
     // uploading profile photo to S3:
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void onChooseFile(Uri uri){
-        userImageFileName = new Date().toString()+".png";
+    public void onChooseFile(Uri uri) {
+        userImageFileName = new Date().toString() + ".png";
         File uploadFile = new File(getApplicationContext().getFilesDir(), "uploadFile");
 
         try {
@@ -149,7 +151,9 @@ public class Profile extends AppCompatActivity {
                 success -> {
                     Log.i("onChooseFile", "uploadFileToS3: succeeded " + success.getKey());
                     Toast.makeText(getApplicationContext(), "Image Successfully Uploaded", Toast.LENGTH_SHORT).show();
-
+                    runOnUiThread(() -> {
+                        findViewById(R.id.submitPost).setEnabled(true);
+                    });
                 },
                 error -> {
                     Log.e("onChooseFile", "uploadFileToS3: failed " + error.toString());
@@ -160,14 +164,13 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    public void getUser(){
-        Amplify.API.query(ModelQuery.list(User.class , User.NAME.eq(userName)),
+    public void getUser() {
+        Amplify.API.query(ModelQuery.list(User.class, User.NAME.eq(userName)),
                 success -> {
 //            currentUser=success.getData();
                     Log.i(TAG, "onCreate: hi queryyyyyyyyyyyyyyyyy" + success.getData());
-                    for (User user:success.getData())
-                    {
-                        currentUser=user;
+                    for (User user : success.getData()) {
+                        currentUser = user;
                         postsAdapter = new PostsAdapter(user.getPosts());
                         LinearLayoutManager postsManager = new LinearLayoutManager(getApplicationContext(),
                                 LinearLayoutManager.VERTICAL, false);
@@ -177,21 +180,23 @@ public class Profile extends AppCompatActivity {
                             postsRecycleView.setAdapter(postsAdapter);
                         });
 
-                        Log.i(TAG, "onCreate: hi useeeeeeeeeer"+ currentUser.getName());
-                        getProfileImage();
+                        Log.i(TAG, "onCreate: hi useeeeeeeeeer" + currentUser.getName());
+                        getProfileImage(currentUser);
 
                     }
                     Log.i(TAG, "success ");
                 },
-                error->{ Log.i(TAG, "error " + error);}
+                error -> {
+                    Log.i(TAG, "error " + error);
+                }
         );
 
     }
 
-    public void getProfileImage(){
-       ImageView profileImage = findViewById(R.id.userImageView);
+    public void getProfileImage(User user) {
+        ImageView profileImage = findViewById(R.id.userImageView);
         Amplify.Storage.getUrl(
-                currentUser.getProfileImage(),
+                user.getProfileImage(),
                 result -> {
                     Log.i("MyAmplifyApp", "Successfully generated: " + result.getUrl());
                     runOnUiThread(() -> {
@@ -203,8 +208,8 @@ public class Profile extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void onChooseFileProfPic(Uri uri){
-        userImageFileName = new Date().toString() + ".png";
+    public void onChooseFileProfPic(Uri uri) {
+        userProfileImageFileName = new Date().toString() + ".jpg";
         File uploadFile = new File(getApplicationContext().getFilesDir(), "uploadFile");
 
         try {
@@ -216,12 +221,14 @@ public class Profile extends AppCompatActivity {
         }
 
         Amplify.Storage.uploadFile(
-                userImageFileName,
+                userProfileImageFileName,
                 uploadFile,
                 success -> {
 
                     Log.i("onChooseFile", "uploadFileToS3: succeeded " + success.getKey());
-                    Toast.makeText(getApplicationContext(), "Image Successfully Uploaded", Toast.LENGTH_SHORT).show();
+                    updateUserImage();
+
+
 //                    runOnUiThread(() -> findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty && !isImageEmpty));
                 },
                 error -> {
@@ -229,6 +236,38 @@ public class Profile extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Image Upload failed", Toast.LENGTH_SHORT).show();
 
                 }
+        );
+
+    }
+
+    public void updateUserImage() {
+
+        Amplify.API.query(ModelQuery.list(User.class, User.NAME.eq(userName)),
+                success -> {
+                    for (User user : success.getData()) {
+                        oldUser = user;
+                    }
+                    List<String> following = new ArrayList<>();
+                    following.add("fb577a0f-77b2-49e9-8bcf-78d79352f031");
+                    User newUser = User.builder().name(oldUser.getName()).following(following).profileImage("Wed Sep 08 17:56:17 GMT+03:00 2021.png").id(oldUser.getId()).build();
+                    Log.i("MyAmplifyApp", "updateUserImage: " + oldUser.getName());
+                    Log.i("MyAmplifyApp", "updateUserImage: " + userProfileImageFileName);
+                    Log.i("MyAmplifyApp", "updateUserImage: " + oldUser.getId());
+//                    oldUser.copyOfBuilder().profileImage(userProfileImageFileName).build();
+                    Amplify.API.mutate(ModelMutation.update(newUser),
+                            response -> {
+                                Log.i("MyAmplifyApp", "user image updated: " + userProfileImageFileName);
+                                runOnUiThread(()->{
+                                    Toast.makeText(getApplicationContext(), "Image Successfully Uploaded", Toast.LENGTH_SHORT).show();
+                                });
+
+                                getProfileImage(oldUser);
+                            },
+                            error -> Log.e("MyAmplifyApp", "update image failed", error)
+                    );
+                    Log.i(TAG, "success ");
+                },
+                error -> Log.i(TAG, "error " + error)
         );
 
     }
