@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:background="@drawable/ic_login_bk"
-    android:backgroundTint="@color/orange">
+    android:background="@drawable/ic_login_bk">
 
     <TextView
         android:id="@+id/textView"
@@ -17,4 +16,10 @@
         android:textSize="15dp"
         android:text="Art Book"
         android:textColor="@color/rose" />
+
 </RelativeLayout>
+
+
+
+
+
