@@ -15,11 +15,12 @@
         android:theme="@style/Theme.Artbook">
         <activity
             android:name=".Users"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".EventDetailActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".EventsActivity" />
         <activity
             android:name=".EventsActivity"
             android:exported="true"

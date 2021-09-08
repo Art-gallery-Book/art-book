@@ -35,6 +35,8 @@ android {
 dependencies {
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
+    implementation 'com.google.android.material:compose-theme-adapter:1.0.2'
+
     implementation 'com.amplifyframework:aws-api:1.25.1'
     implementation 'com.amplifyframework:aws-datastore:1.25.1'
     implementation 'com.amplifyframework:aws-auth-cognito:1.25.1'

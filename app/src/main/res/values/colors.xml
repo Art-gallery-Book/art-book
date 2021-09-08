@@ -11,4 +11,16 @@
     <color name="rose">#5390d9</color>
     <color name="orange">#892b64</color>
     <color name="baig">#f9c74f</color>
+    <drawable name="color1" >
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+            <gradient android:startColor="#f46b45"
+                android:endColor="#eea849"
+                >
+            </gradient>
+        </shape>
+    </drawable>
+
+
 </resources>
