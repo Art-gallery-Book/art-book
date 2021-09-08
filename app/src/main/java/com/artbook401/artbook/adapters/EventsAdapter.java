@@ -17,10 +17,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     //    private final List<TaskItem> taskItems;
     private OnTaskItemClickListener listener;
     private  List<Event> eventList ;
-    //    public ViewAdapter(List<TaskItem> taskItems,OnTaskItemClickListener listener) {
-//        this.taskItems = taskItems;
-//        this.listener = listener;
-//    }
+
     public EventsAdapter(List<Event> eventList, OnTaskItemClickListener listener) {
         this.eventList = eventList;
         this.listener = listener;
@@ -33,7 +30,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.postcard, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.events_adapter, parent, false);
         return new ViewHolder(view,listener);
     }
 
@@ -62,7 +59,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             eventName=itemView.findViewById(R.id.eventsAdaptersName);
             eventDate=itemView.findViewById(R.id.eventsAdapterDate);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,9 +66,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 }
             });
         }
-
-
-
 
     }
 }

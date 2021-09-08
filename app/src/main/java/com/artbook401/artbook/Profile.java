@@ -153,10 +153,7 @@ public class Profile extends AppCompatActivity {
                     Log.i(TAG, "onCreate: hi queryyyyyyyyyyyyyyyyy" + success.getData());
                     for (User user:success.getData())
                     {
-
                         currentUser=user;
-
-//                        postsList.addAll(user.getPosts());
                         postsAdapter = new PostsAdapter(user.getPosts());
                         LinearLayoutManager postsManager = new LinearLayoutManager(getApplicationContext(),
                                 LinearLayoutManager.VERTICAL, false);
