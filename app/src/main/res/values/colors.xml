@@ -11,16 +11,21 @@
     <color name="rose">#5390d9</color>
     <color name="orange">#892b64</color>
     <color name="baig">#f9c74f</color>
-    <drawable name="color1" >
-        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--colors for modern ui-->
+    <color name="whiteTextColor">#fff</color>
+    <color name="primaryTextColor">#2661FA</color>
+    <color name="loginBkColor">#f0f0f0</color>
+
+    <!--colros for card-->
+    <color name="whiteCardColor">#fff</color>
 
 
-            <gradient android:startColor="#f46b45"
-                android:endColor="#eea849"
-                >
-            </gradient>
-        </shape>
-    </drawable>
 
 
+<!--    backcolor-->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#f46b45</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="colorWhite">#FFFFFF</color>
 </resources>
