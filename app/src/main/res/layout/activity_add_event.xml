@@ -102,7 +102,18 @@
     android:focusableInTouchMode="true"
     >
 
-    <LinearLayout android:layout_width="match_parent"
+    <View
+        android:id="@+id/header_view"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/top"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </View>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
@@ -110,14 +121,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <View
-            android:id="@+id/header_view"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
 
-            android:background="@drawable/top">
-
-        </View>
         <!--        <TextView-->
         <!--            android:layout_width="wrap_content"-->
         <!--            android:layout_height="wrap_content"-->
@@ -130,14 +134,14 @@
 
             <EditText
                 android:id="@+id/eventName"
+                style="@style/modifiedEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/event_name"
-                style="@style/modifiedEditText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:autofillHints="name"
-                android:inputType="text" />
+                android:hint="@string/event_name"
+                android:inputType="text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -163,61 +167,69 @@
 
             <EditText
                 android:id="@+id/eventDate"
+                style="@style/modifiedEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:autofillHints="name"
                 android:clickable="false"
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                style="@style/modifiedEditText"
                 android:hint="@string/pick_a_date"
+                android:inputType="date"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eventDesc"
-                android:layout_marginTop="20dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:autofillHints="name"
-                android:inputType="date" />
+                app:layout_constraintTop_toBottomOf="@+id/eventDesc" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="40dp"
-            android:gravity="center"
-            >
+            android:gravity="center">
+
             <Button
                 android:id="@+id/addLocationBTN"
                 style="@style/loginButton"
-                android:text="@string/add_location"
                 android:layout_gravity="right"
-                android:textColor="@color/orange"
                 android:background="@color/colorAccent"
-                android:layout_marginTop="@dimen/loginViewsMargin"/>
-
+                android:text="@string/add_location"
+                android:layout_marginRight="10dp" />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:elevation="10dp"
+                android:indeterminate="true"
+                android:indeterminateTint="#f46b45"
+                android:visibility="invisible"
+                />
             <Button
                 android:id="@+id/addEventBTN"
                 style="@style/loginButton"
                 android:layout_gravity="right"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:layout_marginLeft="10dp"
                 android:background="@color/colorAccent"
-                android:text="@string/add_event"
-                android:textColor="@color/orange" />
+                android:text="@string/add_event"/>
 
         </LinearLayout>
+
         <TextView
             android:id="@+id/eventLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addLocationBTN"
             android:layout_marginTop="20dp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addLocationBTN" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/buttom"/>
+
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/buttom"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

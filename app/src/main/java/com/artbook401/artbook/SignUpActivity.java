@@ -3,10 +3,13 @@ package com.artbook401.artbook;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.os.FileUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,10 +43,19 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        // Define ActionBar object
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
 
+        // Define ColorDrawable object and parse color
+        // using parseColor method
+        // with color hash code as its parameter
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#f46b45"));
 
-
-
+        // Set BackgroundDrawable
+        assert actionBar != null;
+        actionBar.setBackgroundDrawable(colorDrawable);
 
         findViewById(R.id.btnSignup).setEnabled(!isPasswordEmpty && !isUserEmpty && !isEmailEmpty );
 
@@ -107,20 +120,26 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnSignup).setOnClickListener(view -> {
+            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+
             AuthSignUpOptions options = AuthSignUpOptions.builder()
                     .userAttribute(AuthUserAttributeKey.email(), emailSignup.getText().toString())
                     .build();
             Amplify.Auth.signUp(userNameSignup.getText().toString(), passwordSignup.getText().toString(), options,
                     result -> {
                         Log.i("AuthQuickStart", "Result: " + result.toString());
-
+                        findViewById(R.id.progressBar).setVisibility(View.GONE);
                         Intent signUpToConfirm = new Intent(getApplicationContext(), ConfirmActivity.class);
                         signUpToConfirm.putExtra("userName", userNameSignup.getText().toString());
                         signUpToConfirm.putExtra("password", passwordSignup.getText().toString());
                         signUpToConfirm.putExtra("imageName",userImageFileName);
                         startActivity(signUpToConfirm);
                     },
-                    error -> Log.e("AuthQuickStart", "Sign up failed", error)
+                    error -> {
+                        findViewById(R.id.progressBar).setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+                        Log.e("AuthQuickStart", "Sign up failed", error);
+                    }
             );
         });
 

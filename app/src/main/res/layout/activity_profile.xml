@@ -102,15 +102,26 @@
                         android:id="@+id/postImageBTN"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="40dp"
+                        android:layout_marginRight="10dp"
                         android:text="Upload Image"
                         android:textSize="10dp" />
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyleLarge"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:elevation="10dp"
+                        android:indeterminate="true"
+                        android:indeterminateTint="#f46b45"
+                        android:visibility="invisible"
+                        />
 
 
                     <Button
                         android:id="@+id/submitPost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:text="Add" />
 
                 </LinearLayout>

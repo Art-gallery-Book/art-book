@@ -4,7 +4,7 @@
     android:id="@+id/nav_action"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/color"
+    android:background="#f46b45"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 </androidx.appcompat.widget.Toolbar>

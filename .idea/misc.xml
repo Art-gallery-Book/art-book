@@ -5,19 +5,26 @@
       <map>
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable-v24/ic_login_bk.xml" value="0.2703125" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable-v24/login_shape_bk.xml" value="0.2703125" />
+        <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable/back.xml" value="0.2703125" />
+        <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable/border.xml" value="0.2703125" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable/buttom.xml" value="0.2703125" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable/button.xml" value="0.2703125" />
+        <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable/color.xml" value="0.2703125" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable/ic_camera.xml" value="0.2703125" />
-        <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/activity_add_event.xml" value="0.264" />
+        <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/drawable/top.xml" value="0.2703125" />
+        <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/activity_add_event.xml" value="0.176" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/activity_confirm.xml" value="0.2" />
+        <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/activity_event_detail.xml" value="0.15208333333333332" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/activity_events.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/activity_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/activity_users.xml" value="0.1515625" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/events_adapter.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/layout_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/layout_register.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/nav_action.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/layout/userscard.xml" value="0.1515625" />
         <entry key="..\:/Users/STUDENT/AndroidStudioProjects/artbook/app/src/main/res/menu/nav_menu.xml" value="0.25416666666666665" />
         <entry key="app/src/main/res/layout/activity_events.xml" value="0.22192028985507245" />

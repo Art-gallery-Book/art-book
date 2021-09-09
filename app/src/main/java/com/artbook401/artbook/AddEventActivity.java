@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +30,8 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.shivtechs.maplocationpicker.LocationPickerActivity;
+import com.shivtechs.maplocationpicker.MapUtility;
 
 
 import java.text.SimpleDateFormat;
@@ -48,6 +53,20 @@ public class AddEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
+        MapUtility.apiKey  = getResources().getString(R.string.api_key);
+// Define ActionBar object
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+
+        // Define ColorDrawable object and parse color
+        // using parseColor method
+        // with color hash code as its parameter
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#f46b45"));
+
+        // Set BackgroundDrawable
+        assert actionBar != null;
+        actionBar.setBackgroundDrawable(colorDrawable);
 //        ActionBar actionBar = getSupportActionBar();
 //
 //        // showing the back button in action bar
@@ -89,28 +108,30 @@ public class AddEventActivity extends AppCompatActivity {
                     error -> Log.e(TAG, "silentSignIn: error" ));
         });
 
-        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            // There are no request codes
-                            Intent data = result.getData();
-                            pickLocation(data);
-                        }
-                    }
-                });
+//        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+//                new ActivityResultContracts.StartActivityForResult(),
+//                new ActivityResultCallback<ActivityResult>() {
+//                    @Override
+//                    public void onActivityResult(ActivityResult result) {
+//                        if (result.getResultCode() == Activity.RESULT_OK) {
+//                            // There are no request codes
+//                            Intent data = result.getData();
+//                            pickLocation(data);
+//                        }
+//                    }
+//                });
 
         findViewById(R.id.addLocationBTN).setOnClickListener(view ->{
-            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            Intent intent = new Intent(getApplicationContext(), LocationPickerActivity.class);
+            startActivityForResult(intent, 1);
+//            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 
-            try {
-//                startActivityForResult(builder.build(AddEventActivity.this), PLACE_PICKER_REQUEST);
-                someActivityResultLauncher.launch(builder.build(AddEventActivity.this));
-            } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-                e.printStackTrace();
-            }
+//            try {
+////                startActivityForResult(builder.build(AddEventActivity.this), PLACE_PICKER_REQUEST);
+//                someActivityResultLauncher.launch(builder.build(AddEventActivity.this));
+//            } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+//                e.printStackTrace();
+//            }
         });
 
         edittext = findViewById(R.id.eventDate);
@@ -130,24 +151,54 @@ public class AddEventActivity extends AppCompatActivity {
 
     }
 
-//    @Override
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode ==1) {
+                try {
+                    if (data !=null&& data.getStringExtra(MapUtility.ADDRESS) !=null) {
+                        lat = data.getDoubleExtra(MapUtility.LATITUDE, 0.0);
+                        lon = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0);
+                        Bundle completeAddress =data.getBundleExtra("fullAddress");
+                        TextView locationView = findViewById(R.id.eventLocation);
+                        String latLon =lat+ " " + lon;
+                        locationView.setText(latLon);
+                        locationView.setVisibility(View.VISIBLE);
+                        /* data in completeAddress bundle                    "fulladdress"                    "city"                    "state"                    "postalcode"                    "country"                    "addressline1"                    "addressline2"*/
+//                        txtAddress.setText(newStringBuilder().append("addressline2: ").append
+//                                (completeAddress.getString("addressline2")).append("\ncity: ").append
+//                                (completeAddress.getString("city")).append("\npostalcode: ").append
+//                                (completeAddress.getString("postalcode")).append("\nstate: ").append
+//                                (completeAddress.getString("state")).toString());
+//
+//                        txtLatLong.setText(newStringBuilder().append("Lat:").append(currentLatitude).append
+//                                ("  Long:").append(currentLongitude).toString());
+
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+    }
+
+    //    @Override
 //    public boolean onSupportNavigateUp() {
 //       onBackPressed();
 //        return super.onSupportNavigateUp();
 //    }
-    private void pickLocation(Intent data){
-        Place place = PlacePicker.getPlace(data, this);
-        String toastMsg = String.format("Place: %s", place.getName());
-
-        Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-
-        TextView locationView = findViewById(R.id.eventLocation);
-        lat = place.getLatLng().latitude;
-        lon = place.getLatLng().longitude;
-        String latLon =lat+ " " + lon;
-        locationView.setText(latLon);
-        locationView.setVisibility(View.VISIBLE);
-    }
+//    private void pickLocation(Intent data){
+//        Place place = PlacePicker.getPlace(data, this);
+//        String toastMsg = String.format("Place: %s", place.getName());
+//
+//        Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+//
+//        TextView locationView = findViewById(R.id.eventLocation);
+//        lat = place.getLatLng().latitude;
+//        lon = place.getLatLng().longitude;
+//        String latLon =lat+ " " + lon;
+//        locationView.setText(latLon);
+//        locationView.setVisibility(View.VISIBLE);
+//    }
 
 
     private void updateLabel() {
@@ -189,3 +240,4 @@ public class AddEventActivity extends AppCompatActivity {
 
 
 }
+

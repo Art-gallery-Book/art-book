@@ -5,6 +5,7 @@ import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiTh
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,12 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.FileUtils;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,6 +61,20 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         findViewById(R.id.submitPost).setEnabled(false);
 
+        // Define ActionBar object
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+
+        // Define ColorDrawable object and parse color
+        // using parseColor method
+        // with color hash code as its parameter
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#f46b45"));
+
+        // Set BackgroundDrawable
+        assert actionBar != null;
+        actionBar.setBackgroundDrawable(colorDrawable);
+
         getUserName();
         getUser();
 
@@ -88,6 +106,8 @@ public class Profile extends AppCompatActivity {
         });
 
         findViewById(R.id.submitPost).setOnClickListener(view -> {
+            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+
             EditText post = findViewById(R.id.postDesc);
             Post newPost = Post.builder()
                     .image(userImageFileName)
@@ -97,10 +117,22 @@ public class Profile extends AppCompatActivity {
 
             Amplify.API.mutate(ModelMutation.create(newPost),
                     res -> {
+                runOnUiThread(()->{
+                    findViewById(R.id.progressBar).setVisibility(View.GONE);
+                });
+                        Toast.makeText(getApplicationContext(), "Post Successfully Created", Toast.LENGTH_SHORT).show();
+
                         Log.i(TAG, "silentSignIn: user create successfully");
                         getUser();
                     },
-                    error -> Log.e(TAG, "silentSignIn: error"));
+                    error -> {
+                        Log.e(TAG, "silentSignIn: error");
+                        runOnUiThread(()->{
+                            Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                            findViewById(R.id.progressBar).setVisibility(View.GONE);
+
+                        });
+                    });
         });
 
         Button addingPhotoBTN = findViewById(R.id.postImageBTN);
@@ -135,6 +167,7 @@ public class Profile extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     public void onChooseFile(Uri uri) {
+        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
         userImageFileName = new Date().toString() + ".png";
         File uploadFile = new File(getApplicationContext().getFilesDir(), "uploadFile");
 
@@ -152,11 +185,15 @@ public class Profile extends AppCompatActivity {
                     Log.i("onChooseFile", "uploadFileToS3: succeeded " + success.getKey());
                     Toast.makeText(getApplicationContext(), "Image Successfully Uploaded", Toast.LENGTH_SHORT).show();
                     runOnUiThread(() -> {
+                        findViewById(R.id.progressBar).setVisibility(View.GONE);
                         findViewById(R.id.submitPost).setEnabled(true);
                     });
                 },
                 error -> {
                     Log.e("onChooseFile", "uploadFileToS3: failed " + error.toString());
+                    runOnUiThread(() -> {
+                        findViewById(R.id.progressBar).setVisibility(View.GONE);
+                    });
                     Toast.makeText(getApplicationContext(), "Image Upload failed", Toast.LENGTH_SHORT).show();
 
                 }
