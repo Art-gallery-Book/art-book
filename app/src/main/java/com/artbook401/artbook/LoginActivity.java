@@ -1,8 +1,11 @@
 package com.artbook401.artbook;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -10,6 +13,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
@@ -32,6 +36,20 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        // Define ActionBar object
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+
+        // Define ColorDrawable object and parse color
+        // using parseColor method
+        // with color hash code as its parameter
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#f46b45"));
+
+        // Set BackgroundDrawable
+        assert actionBar != null;
+        actionBar.setBackgroundDrawable(colorDrawable);
+
         configAmplify();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor preferenceEditor = sharedPreferences.edit();
@@ -96,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.btnSignIn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
                 String userName = ((TextView) findViewById(R.id.userNameSignIn)).getText().toString();
                 String password = ((TextView) findViewById(R.id.passwordSignIn)).getText().toString();
 
@@ -108,11 +127,15 @@ public class LoginActivity extends AppCompatActivity {
                             preferenceEditor.putString("userName", userName);
                             preferenceEditor.putString("userID", userID);
                             preferenceEditor.apply();
-
+                            findViewById(R.id.progressBar).setVisibility(View.GONE);
                             Intent signInToHome = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(signInToHome);
                         },
-                        error -> Log.e("AuthQuickstart", error.toString())
+                        error -> {
+                            Log.e("AuthQuickstart", error.toString());
+                            findViewById(R.id.progressBar).setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+                        }
                 );
             }
         });

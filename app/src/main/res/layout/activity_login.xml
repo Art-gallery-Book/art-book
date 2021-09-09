@@ -78,11 +78,23 @@
             android:id="@+id/btnSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="#000"
             android:text="Go"
-            android:textColor="#fff"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"/>
+            android:textColor="#fff" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-50dp"
+            android:layout_marginLeft="300dp"
+            android:elevation="10dp"
+            android:indeterminate="true"
+            android:indeterminateTint="#f46b45"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btnSignupSignIn"

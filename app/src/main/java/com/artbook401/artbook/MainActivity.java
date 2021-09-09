@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getUser();
 
 
         mToolbar = (Toolbar) findViewById(R.id.nav_action);
@@ -68,6 +69,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUser();
     }
 
     @Override
@@ -160,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 LinearLayoutManager.VERTICAL, false);
         RecyclerView postsRecycleView = findViewById(R.id.mainRV);
         runOnUiThread(() -> {
+            findViewById(R.id.progressBar).setVisibility(View.GONE);
             postsRecycleView.setLayoutManager(postsManager);
             postsRecycleView.setAdapter(myAdapter);
         });

@@ -12,6 +12,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,11 +50,19 @@ public class AddEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
-//        ActionBar actionBar = getSupportActionBar();
-//
-//        // showing the back button in action bar
-//        assert actionBar != null;
-//        actionBar.setDisplayHomeAsUpEnabled(true);
+        // Define ActionBar object
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+
+        // Define ColorDrawable object and parse color
+        // using parseColor method
+        // with color hash code as its parameter
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#f46b45"));
+
+        // Set BackgroundDrawable
+        assert actionBar != null;
+        actionBar.setBackgroundDrawable(colorDrawable);
 
 // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
 
@@ -103,6 +113,7 @@ public class AddEventActivity extends AppCompatActivity {
                 });
 
         findViewById(R.id.addLocationBTN).setOnClickListener(view ->{
+            Log.i(TAG, "onCreate: test");
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 
             try {
@@ -136,15 +147,19 @@ public class AddEventActivity extends AppCompatActivity {
 //        return super.onSupportNavigateUp();
 //    }
     private void pickLocation(Intent data){
-        Place place = PlacePicker.getPlace(data, this);
-        String toastMsg = String.format("Place: %s", place.getName());
+
+//        Place place = PlacePicker.getPlace(data, this);
+        Place place = PlacePicker.getPlace(this,data);
+        lat = place.getLatLng().latitude;
+        lon = place.getLatLng().longitude;
+        String latLon =lat+ " " + lon;
+
+        String toastMsg = String.format("Place: ", latLon);
 
         Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
 
         TextView locationView = findViewById(R.id.eventLocation);
-        lat = place.getLatLng().latitude;
-        lon = place.getLatLng().longitude;
-        String latLon =lat+ " " + lon;
+
         locationView.setText(latLon);
         locationView.setVisibility(View.VISIBLE);
     }
