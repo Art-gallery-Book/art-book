@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">artbook</string>
+    <string name="app_name">Art Gallery</string>
     <string name="register">REGISTER</string>
     <string name="login_email_hint">Email</string>
     <string name="login_username_hint">Username</string>
@@ -28,6 +28,8 @@
 
     <string name="open">Open</string>
     <string name="close">Close</string>
+
+    <string name="api_key">AIzaSyBY_H5nHlStCPVGsEkO_TMjdqhM8SrhpZM</string>
 
 
     <string name="login_name_hint">Name</string>
